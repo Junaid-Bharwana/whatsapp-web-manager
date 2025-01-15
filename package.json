@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js",
-    "postinstall": "node render-postinstall.js"
+    "postinstall": "npm install",
+    "dev": "nodemon app.js"
   },
   "dependencies": {
     "express": "^4.18.2",
