@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: whatsapp-web-manager
+    env: node
+    region: frankfurt  # Choose your preferred region
+    plan: standard  # At least standard plan for better resources
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PUPPETEER_SKIP_CHROMIUM_DOWNLOAD
+        value: true
+      - key: PORT
+        value: 3002
+    healthCheckPath: /
+    disk:
+      name: whatsapp-sessions
+      mountPath: /opt/render/project/src/.wwebjs_auth
+      sizeGB: 1

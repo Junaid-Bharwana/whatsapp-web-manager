@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Web Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/1200px-WhatsApp.svg.png" alt="Logo" class="logo">
+            <span>WhatsApp Manager</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-link active" data-page="dashboard">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+            <a href="#" class="nav-link" data-page="messages">
+                <i class="fas fa-comment"></i> Messages
+            </a>
+            <a href="#" class="nav-link" data-page="contacts">
+                <i class="fas fa-address-book"></i> Contacts
+            </a>
+            <a href="#" class="nav-link" data-page="groups">
+                <i class="fas fa-users"></i> Groups
+            </a>
+            <a href="#" class="nav-link" data-page="bulk-message">
+                <i class="fas fa-paper-plane"></i> Bulk Message
+            </a>
+            <a href="#" class="nav-link" data-page="settings">
+                <i class="fas fa-cog"></i> Settings
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Header -->
+        <header class="main-header">
+            <button class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="header-right">
+                <div class="connection-status">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Disconnected</span>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-link dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown">
+                        <i class="fas fa-user-circle"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#" id="logout-btn">Logout</a></li>
+                        <li><a class="dropdown-item" href="#" id="clear-data-btn">Clear Session</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content Pages -->
+        <div class="content-wrapper">
+            <!-- Dashboard Page -->
+            <div class="content-page active" id="dashboard-page">
+                <div class="container-fluid">
+                    <h2 class="page-title">Dashboard</h2>
+                    <div class="row stats-cards">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="stat-card">
+                                <div class="stat-card-content">
+                                    <i class="fas fa-users"></i>
+                                    <h3 id="total-contacts">0</h3>
+                                    <p>Total Contacts</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="stat-card">
+                                <div class="stat-card-content">
+                                    <i class="fas fa-user-group"></i>
+                                    <h3 id="total-groups">0</h3>
+                                    <p>Total Groups</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="stat-card">
+                                <div class="stat-card-content">
+                                    <i class="fas fa-message"></i>
+                                    <h3 id="total-messages">0</h3>
+                                    <p>Messages Today</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="stat-card">
+                                <div class="stat-card-content">
+                                    <i class="fas fa-paper-plane"></i>
+                                    <h3 id="total-broadcasts">0</h3>
+                                    <p>Broadcasts</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- QR Code Section -->
+                    <div class="qr-section mb-4">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h4 class="mb-3">WhatsApp Connection</h4>
+                                <div id="qrcode" class="qr-container">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                                <p id="connection-message" class="mt-3">Initializing WhatsApp...</p>
+                            </div>
+                        </div>
+                    </div>
+                       
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Recent Activity</h5>
+                                    <div id="activity-log" class="activity-log">
+                                        <!-- Activity logs will be added here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messages Page -->
+            <div class="content-page" id="messages-page">
+                <div class="container-fluid">
+                    <h2 class="page-title">Messages</h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <form id="messageForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Recipient Number</label>
+                                    <input type="text" class="form-control" id="recipientNumber" placeholder="Enter number with country code (e.g., 911234567890)" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Message</label>
+                                    <textarea class="form-control" id="messageText" rows="3" required></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Attachment (optional)</label>
+                                    <input type="file" class="form-control" id="messageFile">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Send Message</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contacts Page -->
+            <div class="content-page" id="contacts-page">
+                <div class="container-fluid">
+                    <h2 class="page-title">Contacts</h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="contacts-header d-flex justify-content-between align-items-center mb-4">
+                                <input type="text" class="form-control w-auto" id="contact-search" placeholder="Search contacts...">
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addContactModal">
+                                    <i class="fas fa-plus"></i> Add Contact
+                                </button>
+                            </div>
+                            <div id="contacts-list" class="list-group">
+                                <!-- Contacts will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Groups Page -->
+            <div class="content-page" id="groups-page">
+                <div class="container-fluid">
+                    <h2 class="page-title">Groups</h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="groups-header d-flex justify-content-between align-items-center mb-4">
+                                <input type="text" class="form-control w-auto" id="group-search" placeholder="Search groups...">
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createGroupModal">
+                                    <i class="fas fa-plus"></i> Create Group
+                                </button>
+                            </div>
+                            <div id="groups-list" class="list-group">
+                                <!-- Groups will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bulk Message Page -->
+            <div class="content-page" id="bulk-message-page">
+                <div class="container-fluid">
+                    <h2 class="page-title">Bulk Message</h2>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Select Recipients</h5>
+                                    <div class="nav nav-tabs" role="tablist">
+                                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#contacts-tab">
+                                            Contacts
+                                        </button>
+                                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#groups-tab">
+                                            Groups
+                                        </button>
+                                    </div>
+                                    <div class="tab-content mt-3">
+                                        <div class="tab-pane fade show active" id="contacts-tab">
+                                            <div id="bulk-contacts-list" class="list-group">
+                                                <!-- Contacts for bulk message will be loaded here -->
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="groups-tab">
+                                            <div id="bulk-groups-list" class="list-group">
+                                                <!-- Groups for bulk message will be loaded here -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Compose Message</h5>
+                                    <form id="bulkMessageForm">
+                                        <div class="mb-3">
+                                            <label class="form-label">Selected Recipients: <span id="selected-count">0</span></label>
+                                            <div id="selected-recipients" class="selected-recipients-list"></div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Message</label>
+                                            <textarea class="form-control" id="bulkMessageText" rows="3" required></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Media (optional)</label>
+                                            <input type="file" class="form-control" id="bulkMessageFile">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary" id="send-bulk-btn" disabled>
+                                            Send Bulk Message
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Page -->
+            <div class="content-page" id="settings-page">
+                <div class="container-fluid">
+                    <h2 class="page-title">Settings</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Profile Settings</h5>
+                                    <form id="profileSettingsForm">
+                                        <div class="mb-3">
+                                            <label class="form-label">Display Name</label>
+                                            <input type="text" class="form-control" id="displayName">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Status Message</label>
+                                            <input type="text" class="form-control" id="statusMessage">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Account Settings</h5>
+                                    <div class="mb-3">
+                                        <button class="btn btn-danger" id="clear-data-btn">Clear All Data</button>
+                                    </div>
+                                    <div class="mb-3">
+                                        <button class="btn btn-warning" id="logout-account-btn">Logout Account</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <!-- Add Contact Modal -->
+    <div class="modal fade" id="addContactModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Contact</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addContactForm">
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" id="contactName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Number</label>
+                            <input type="text" class="form-control" id="contactNumber" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="save-contact-btn">Save Contact</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Group Modal -->
+    <div class="modal fade" id="createGroupModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create New Group</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createGroupForm">
+                        <div class="mb-3">
+                            <label class="form-label">Group Name</label>
+                            <input type="text" class="form-control" id="groupName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Select Participants</label>
+                            <div id="group-contacts-list" class="list-group">
+                                <!-- Contacts will be loaded here -->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="create-group-btn">Create Group</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="notification-toast" class="toast" role="alert">
+            <div class="toast-header">
+                <strong class="me-auto">Notification</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
