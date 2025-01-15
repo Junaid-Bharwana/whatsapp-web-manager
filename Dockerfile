@@ -1,5 +1,5 @@
-# Use Node.js 18 as the base image
-FROM node:18-slim
+# Use Node.js 16 as the base image
+FROM node:16-slim
 
 # Install required dependencies for Puppeteer and Chrome
 RUN apt-get update && apt-get install -y \
@@ -16,16 +16,18 @@ RUN apt-get update && apt-get install -y \
 
 # Set environment variables for Puppeteer
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium \
+    NODE_ENV=production \
+    PORT=3000
 
 # Create app directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install
+RUN npm install --production
 
 # Copy app source
 COPY . .
