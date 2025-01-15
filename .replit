@@ -1,0 +1,10 @@
+run = "npm start"
+language = "nodejs"
+entrypoint = "app.js"
+
+[nix]
+channel = "stable-22_11"
+
+[deployment]
+run = ["sh", "-c", "node app.js"]
+deploymentTarget = "cloudrun"
