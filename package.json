@@ -7,7 +7,6 @@
     "start": "node app.js",
     "dev": "nodemon app.js",
     "stop": "node stop-server.js",
-    "build": "node render-postinstall.js",
     "postinstall": "node render-postinstall.js"
   },
   "dependencies": {
