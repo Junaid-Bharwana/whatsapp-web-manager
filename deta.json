@@ -1,0 +1,11 @@
+{
+  "name": "whatsapp-web-manager",
+  "description": "WhatsApp Web Automation",
+  "runtime": "nodejs14.x",
+  "env": [
+    {
+      "key": "NODE_ENV",
+      "value": "production"
+    }
+  ]
+}

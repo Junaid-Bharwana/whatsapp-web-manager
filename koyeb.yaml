@@ -1,0 +1,15 @@
+name: whatsapp-web-manager
+service:
+  name: whatsapp-web
+  ports:
+    - port: 3000
+      http: true
+  env:
+    - name: NODE_ENV
+      value: production
+  buildpacks:
+    - name: nodejs
+  scale:
+    horizontal:
+      min: 1
+      max: 1
