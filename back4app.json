@@ -1,0 +1,11 @@
+{
+  "name": "whatsapp-web-manager",
+  "description": "WhatsApp Web Automation with all features",
+  "type": "nodejs",
+  "scripts": {
+    "postdeploy": "npm install && node render-postinstall.js"
+  },
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
