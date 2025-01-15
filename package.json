@@ -6,7 +6,6 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "stop": "node stop-server.js",
     "postinstall": "node render-postinstall.js"
   },
   "dependencies": {
@@ -25,6 +24,6 @@
     "whatsapp-web.js": "^1.23.0"
   },
   "engines": {
-    "node": "18.x"
+    "node": "16.x"
   }
 }

@@ -1,0 +1,18 @@
+v: 0
+micros:
+  - name: whatsapp-web
+    src: .
+    engine: nodejs16
+    primary: true
+    public: true
+    presets:
+      env:
+        - name: NODE_ENV
+          default: production
+    commands:
+      - npm install
+    include:
+      - app.js
+      - package.json
+      - public/*
+    run: node app.js

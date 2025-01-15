@@ -10,8 +10,10 @@
     "restart": {
       "include": [
         "^\\.env$",
-        "^app\\.js$"
+        "^app\\.js$",
+        "^public/"
       ]
-    }
+    },
+    "throttle": 1000
   }
 }
