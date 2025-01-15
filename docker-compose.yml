@@ -1,0 +1,11 @@
+version: '3'
+services:
+  whatsapp-web:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - .wwebjs_auth:/usr/src/app/.wwebjs_auth
+    restart: unless-stopped

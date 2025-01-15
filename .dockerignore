@@ -1,0 +1,10 @@
+node_modules
+npm-debug.log
+.git
+.gitignore
+.wwebjs_auth/*
+.wwebjs_cache/*
+*.zip
+.env
+*.log
+.DS_Store
