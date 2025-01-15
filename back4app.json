@@ -1,11 +1,18 @@
 {
   "name": "whatsapp-web-manager",
   "description": "WhatsApp Web Automation with all features",
-  "type": "nodejs",
-  "scripts": {
-    "postdeploy": "npm install && node render-postinstall.js"
+  "type": "container",
+  "container": {
+    "docker": {
+      "dockerfile": "./Dockerfile"
+    }
   },
   "env": {
-    "NODE_ENV": "production"
+    "NODE_ENV": "production",
+    "PORT": "3000"
+  },
+  "resources": {
+    "cpu": 0.5,
+    "memory": "512Mi"
   }
 }
