@@ -5,6 +5,7 @@ const http = require('http');
 const socketIO = require('socket.io');
 const path = require('path');
 const fs = require('fs');
+const https = require('https');
 
 const app = express();
 const server = http.createServer(app);
@@ -216,6 +217,17 @@ process.on('unhandledRejection', (err) => {
 process.on('uncaughtException', (err) => {
     console.error('Uncaught Exception:', err);
 });
+
+// Keep app alive
+setInterval(() => {
+    https.get(`https://${process.env.BACK4APP_APP_ID}.back4app.io/`, (resp) => {
+        if (resp.statusCode === 200) {
+            console.log('Keep alive ping successful');
+        }
+    }).on('error', (err) => {
+        console.error('Keep alive ping failed:', err);
+    });
+}, 5 * 60 * 1000); // Ping every 5 minutes
 
 server.listen(3000, () => {
     console.log('Server running on port 3000');
