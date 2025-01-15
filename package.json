@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "stop": "node stop-server.js"
+    "stop": "node stop-server.js",
+    "build": "node render-postinstall.js",
+    "postinstall": "node render-postinstall.js"
   },
   "dependencies": {
     "express": "^4.18.2",
@@ -22,5 +24,8 @@
     "sharp": "^0.32.6",
     "socket.io": "^4.7.2",
     "whatsapp-web.js": "^1.23.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
   }
 }
